@@ -1,0 +1,14 @@
+{
+  "name": "lawyer-abache",
+  "compatibility_date": "2026-09-26",
+  "assets": {
+    "directory": "./public",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "cabinetabache-sadik.com", "custom_domain": true },
+    { "pattern": "www.cabinetabache-sadik.com", "custom_domain": true }
+  ]
+}
