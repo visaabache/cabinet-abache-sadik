@@ -580,6 +580,8 @@ html.nav-open { overflow: hidden; }
 .site-footer li + li { margin-top: 8px; }
 .site-footer a:hover { color: #fff; }
 .footer-bottom { border-top: 1px solid var(--line-dark); padding-block: 22px 26px; display: flex; justify-content: space-between; gap: 12px 32px; flex-wrap: wrap; font-size: .86rem; }
+.footer-credit a { color: var(--brass-2); }
+@media (min-width: 761px) { .footer-bottom { padding-inline-end: 96px; } }
 
 /* ---------- Floating actions ---------- */
 .wa-float {
