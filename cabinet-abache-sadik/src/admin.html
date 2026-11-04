@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>لوحة التحكم | مكتب عباش وصديق</title>
+<link rel="icon" href="/img/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E1B2C; --ink-2: #1c2b40; --brass: #B08D57; --brass-2: #D2B98C;
+    --paper: #F5F3EE; --card: #fff; --line: #E3DED3; --muted: #6b7280;
+    --ok: #1f7a4d; --ok-bg: #e7f4ec; --err: #b42318; --err-bg: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  [hidden] { display: none !important; }
+  .top { background: var(--ink); color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .top b { font-weight: 600; }
+  .top .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 80px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  h1 { font-size: 1.5rem; margin: 0 0 16px; }
+  h2 { font-size: 1.15rem; margin: 0 0 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; border-radius: 8px; padding: 9px 16px; cursor: pointer; font-weight: 600; text-decoration: none; background: var(--ink); color: #fff; }
+  .btn:hover { filter: brightness(1.12); }
+  .btn-brass { background: var(--brass); color: var(--ink); }
+  .btn-ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+  .top .btn-ghost { color: #fff; border-color: rgba(255,255,255,.3); }
+  .btn-danger { background: transparent; color: var(--err); border-color: #f1c1bb; }
+  .btn:disabled { opacity: .55; cursor: progress; }
+  label { display: block; font-weight: 600; margin: 16px 0 6px; }
+  .hint { color: var(--muted); font-size: .88rem; font-weight: 400; margin: 2px 0 6px; }
+  input[type=text], input[type=password], input[type=date], select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
+  input:focus, select:focus, textarea:focus, .editor:focus { outline: 2px solid var(--brass-2); outline-offset: 1px; }
+  textarea { min-height: 90px; resize: vertical; }
+  .ltr { direction: ltr; text-align: left; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid var(--line); border-bottom: 0; border-radius: 8px 8px 0 0; background: #faf8f4; }
+  .toolbar button { border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .editor { min-height: 320px; border: 1px solid var(--line); border-radius: 0 0 8px 8px; padding: 14px 16px; background: #fff; }
+  .editor h2 { font-size: 1.25rem; margin: 18px 0 8px; } .editor h3 { font-size: 1.08rem; margin: 14px 0 6px; }
+  .editor:empty::before { content: attr(data-placeholder); color: #9aa0a6; }
+  .faq-item { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 10px; background: #fcfbf8; }
+  .faq-item .row { display: flex; justify-content: space-between; align-items: center; }
+  .list { width: 100%; border-collapse: collapse; }
+  .list th, .list td { text-align: right; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .list th { font-size: .85rem; color: var(--muted); font-weight: 600; }
+  .list td a { color: var(--ink); font-weight: 600; }
+  .badge { display: inline-block; font-size: .8rem; padding: 2px 10px; border-radius: 99px; }
+  .badge.published { background: var(--ok-bg); color: var(--ok); } .badge.draft { background: #eef0f3; color: var(--muted); }
+  .msg { padding: 10px 14px; border-radius: 8px; margin: 0 0 16px; }
+  .msg.ok { background: var(--ok-bg); color: var(--ok); } .msg.err { background: var(--err-bg); color: var(--err); }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .bar .spacer { flex: 1; }
+  .login { max-width: 400px; margin: 10vh auto; }
+  .empty { text-align: center; color: var(--muted); padding: 30px 0; }
+  .head-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .head-row h1 { margin: 0; }
+  @media (max-width: 640px) { .list .hide-sm { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <b>لوحة التحكم – المدونة</b>
+  <div class="actions" id="topActions" hidden>
+    <a class="btn btn-ghost" href="/blog" target="_blank" rel="noopener">عرض المدونة</a>
+    <button class="btn btn-ghost" type="button" id="logoutBtn">تسجيل الخروج</button>
+  </div>
+</header>
+
+<!-- Not configured yet -->
+<section class="wrap" id="setupView" hidden>
+  <div class="card">
+    <h1>لوحة التحكم غير مفعّلة بعد</h1>
+    <p id="setupText"></p>
+  </div>
+</section>
+
+<!-- Login -->
+<section class="wrap" id="loginView" hidden>
+  <form class="card login" id="loginForm">
+    <h1>تسجيل الدخول</h1>
+    <div class="msg err" id="loginMsg" hidden></div>
+    <label for="password">كلمة المرور</label>
+    <input id="password" type="password" autocomplete="current-password" required>
+    <div class="bar"><button class="btn btn-brass" type="submit">دخول</button></div>
+  </form>
+</section>
+
+<!-- Articles list -->
+<section class="wrap" id="listView" hidden>
+  <div class="head-row">
+    <h1>المقالات</h1>
+    <button class="btn btn-brass" type="button" id="newBtn">+ مقال جديد</button>
+  </div>
+  <div class="msg" id="listMsg" hidden></div>
+  <div class="card">
+    <table class="list">
+      <thead><tr><th>العنوان</th><th class="hide-sm">المجال</th><th class="hide-sm">التاريخ</th><th>الحالة</th></tr></thead>
+      <tbody id="postRows"></tbody>
+    </table>
+    <p class="empty" id="emptyList" hidden>لا توجد مقالات بعد. اضغطوا على «مقال جديد» لكتابة أول مقال.</p>
+    <p class="hint">تظهر هنا المقالات التي تكتبونها من لوحة التحكم. أما المقالات التي كانت على الموقع من قبل فهي جزء من ملفاته ولا تُعدَّل من هنا.</p>
+  </div>
+</section>
+
+<!-- Editor -->
+<section class="wrap" id="editView" hidden>
+  <div class="head-row">
+    <h1 id="editTitle">مقال جديد</h1>
+    <button class="btn btn-ghost" type="button" id="backBtn">→ رجوع للائحة</button>
+  </div>
+  <div class="msg" id="editMsg" hidden></div>
+  <form class="card" id="postForm" novalidate>
+    <label for="f-title">العنوان (السؤال كما يكتبه الناس في Google) *</label>
+    <input id="f-title" type="text" maxlength="200" required placeholder="مثال: شحال كتاخد دعوى الطلاق للشقاق في 2026؟">
+
+    <label for="f-subtitle">عنوان فرعي</label>
+    <input id="f-subtitle" type="text" maxlength="200" placeholder="مثال: المدة القانونية والمراحل وما يؤخر الحكم">
+
+    <div class="grid">
+      <div>
+        <label for="f-category">المجال *</label>
+        <select id="f-category" required></select>
+      </div>
+      <div>
+        <label for="f-date">تاريخ النشر</label>
+        <input id="f-date" type="date">
+      </div>
+    </div>
+
+    <label for="f-slug">رابط المقال</label>
+    <p class="hint">حروف لاتينية صغيرة وأرقام وشرطة فقط، مثل: <span class="ltr">divorce-chiqaq-duree</span>. اتركوه فارغاً ليُنشأ تلقائياً. لا يمكن تغييره بعد الحفظ.</p>
+    <input id="f-slug" class="ltr" type="text" maxlength="90" placeholder="article-..." pattern="[a-z0-9]+(-[a-z0-9]+)*">
+
+    <label for="f-answer">الجواب باختصار</label>
+    <p class="hint">فقرة قصيرة تجيب على السؤال مباشرة. تظهر في أعلى المقال مع زر واتساب. اختياري لكنه مستحسن.</p>
+    <textarea id="f-answer" maxlength="1500"></textarea>
+
+    <label>نص المقال</label>
+    <p class="hint">استعملوا «عنوان قسم» لكل جزء من المقال؛ تظهر هذه العناوين في فهرس المقال.</p>
+    <div class="toolbar" role="toolbar" aria-label="أدوات التنسيق">
+      <button type="button" data-block="h2">عنوان قسم</button>
+      <button type="button" data-block="h3">عنوان صغير</button>
+      <button type="button" data-block="p">فقرة</button>
+      <button type="button" data-cmd="bold"><b>غامق</b></button>
+      <button type="button" data-cmd="insertUnorderedList">• قائمة</button>
+      <button type="button" data-cmd="insertOrderedList">1. قائمة مرقمة</button>
+      <button type="button" data-cmd="createLink">رابط</button>
+      <button type="button" data-cmd="removeFormat">إزالة التنسيق</button>
+    </div>
+    <div class="editor" id="f-body" contenteditable="true" data-placeholder="اكتبوا نص المقال هنا…"></div>
+
+    <label>الأسئلة الشائعة</label>
+    <p class="hint">تظهر في آخر المقال وتساعد على الظهور في Google.</p>
+    <div id="faqList"></div>
+    <button class="btn btn-ghost" type="button" id="addFaq">+ إضافة سؤال</button>
+
+    <label for="f-description">وصف المقال في Google</label>
+    <p class="hint">جملة أو جملتان (حوالي 160 حرفاً). اتركوه فارغاً ليؤخذ من «الجواب باختصار».</p>
+    <textarea id="f-description" maxlength="300"></textarea>
+
+    <label for="f-keywords">كلمات مفتاحية</label>
+    <p class="hint">مفصولة بفاصلة، مثل: الطلاق للشقاق، مدونة الأسرة، محامي طلاق</p>
+    <input id="f-keywords" type="text">
+
+    <div class="bar">
+      <button class="btn btn-brass" type="button" data-save="published">نشر المقال</button>
+      <button class="btn btn-ghost" type="button" data-save="draft">حفظ كمسودة</button>
+      <a class="btn btn-ghost" id="previewLink" target="_blank" rel="noopener" hidden>معاينة</a>
+      <span class="spacer"></span>
+      <button class="btn btn-danger" type="button" id="deleteBtn" hidden>حذف المقال</button>
+    </div>
+  </form>
+</section>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var views = ["setupView", "loginView", "listView", "editView"];
+  var categories = {};
+  var editing = null;   // slug of the article being edited, or null for a new one
+  var dirty = false;
+
+  function show(id) {
+    views.forEach(function (v) { $("#" + v).hidden = v !== id; });
+    $("#topActions").hidden = !(id === "listView" || id === "editView");
+    window.scrollTo(0, 0);
+  }
+  function message(el, text, kind) {
+    el.textContent = text; el.className = "msg " + (kind || "ok"); el.hidden = !text;
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
+  }
+  function api(path, opts) {
+    opts = opts || {};
+    return fetch(path, {
+      method: opts.method || "GET",
+      headers: opts.body ? { "content-type": "application/json" } : {},
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+      credentials: "same-origin",
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (res.status === 401 && path !== "/api/login") { show("loginView"); throw new Error("انتهت الجلسة، سجلوا الدخول من جديد."); }
+        if (!res.ok) { var err = new Error(data.error || "حدث خطأ، أعيدوا المحاولة."); err.data = data; err.status = res.status; throw err; }
+        return data;
+      });
+    });
+  }
+  function today() { return new Date().toISOString().slice(0, 10); }
+
+  // ---------- start
+  api("/api/session").then(function (s) {
+    if (s.authenticated) loadList(); else show("loginView");
+  }).catch(function (err) {
+    if (err.data && err.data.error === "not_configured") {
+      var missing = [];
+      if (!err.data.db) missing.push("قاعدة البيانات (D1)");
+      if (!err.data.password) missing.push("كلمة مرور المسؤول (ADMIN_PASSWORD)");
+      $("#setupText").textContent = "يجب إعداد ما يلي في Cloudflare قبل استعمال لوحة التحكم: " + missing.join(" و") + ". راجعوا ملف ADMIN.md في المستودع.";
+      show("setupView");
+    } else if (!$("#loginView").hidden) {
+      // already showing login
+    } else {
+      show("loginView");
+    }
+  });
+
+  // ---------- login / logout
+  $("#loginForm").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var btn = ev.target.querySelector("button"); btn.disabled = true;
+    api("/api/login", { method: "POST", body: { password: $("#password").value } })
+      .then(function () { $("#password").value = ""; $("#loginMsg").hidden = true; loadList(); })
+      .catch(function (err) { message($("#loginMsg"), err.message, "err"); })
+      .then(function () { btn.disabled = false; });
+  });
+  $("#logoutBtn").addEventListener("click", function () {
+    if (dirty && !confirm("لديكم تعديلات غير محفوظة. الخروج على أي حال؟")) return;
+    api("/api/logout", { method: "POST" }).then(function () { dirty = false; show("loginView"); });
+  });
+
+  // ---------- list
+  function loadCategories() {
+    if (Object.keys(categories).length) return Promise.resolve();
+    return api("/api/categories").then(function (c) {
+      categories = c;
+      $("#f-category").innerHTML = '<option value="">— اختاروا المجال —</option>' +
+        Object.keys(c).map(function (k) { return '<option value="' + esc(k) + '">' + esc(c[k]) + "</option>"; }).join("");
+    });
+  }
+  function loadList(notice) {
+    return loadCategories().then(function () { return api("/api/posts"); }).then(function (posts) {
+      $("#postRows").innerHTML = posts.map(function (p) {
+        return "<tr><td><a href=\"#\" data-edit=\"" + esc(p.slug) + "\">" + esc(p.title) + "</a></td>" +
+          "<td class=\"hide-sm\">" + esc(categories[p.category] || p.category) + "</td>" +
+          "<td class=\"hide-sm\">" + esc(p.date) + "</td>" +
+          "<td><span class=\"badge " + esc(p.status) + "\">" + (p.status === "published" ? "منشور" : "مسودة") + "</span></td></tr>";
+      }).join("");
+      $("#emptyList").hidden = posts.length > 0;
+      message($("#listMsg"), notice || "", "ok");
+      show("listView");
+    }).catch(function (err) { message($("#listMsg"), err.message, "err"); show("listView"); });
+  }
+  $("#postRows").addEventListener("click", function (ev) {
+    var a = ev.target.closest("[data-edit]");
+    if (a) { ev.preventDefault(); openEditor(a.getAttribute("data-edit")); }
+  });
+  $("#newBtn").addEventListener("click", function () { openEditor(null); });
+  $("#backBtn").addEventListener("click", function () {
+    if (dirty && !confirm("لديكم تعديلات غير محفوظة. الرجوع على أي حال؟")) return;
+    dirty = false; loadList();
+  });
+
+  // ---------- editor
+  function faqRow(q, a) {
+    var div = document.createElement("div");
+    div.className = "faq-item";
+    div.innerHTML = '<div class="row"><b>سؤال</b><button type="button" class="btn btn-danger" data-remove>حذف</button></div>' +
+      '<input type="text" maxlength="300" placeholder="السؤال" data-q>' +
+      '<textarea maxlength="2000" placeholder="الجواب" data-a style="margin-top:8px"></textarea>';
+    div.querySelector("[data-q]").value = q || "";
+    div.querySelector("[data-a]").value = a || "";
+    $("#faqList").appendChild(div);
+  }
+  $("#faqList").addEventListener("click", function (ev) {
+    if (ev.target.matches("[data-remove]")) { ev.target.closest(".faq-item").remove(); dirty = true; }
+  });
+  $("#addFaq").addEventListener("click", function () { faqRow(); dirty = true; });
+
+  function fill(p) {
+    $("#f-title").value = p.title || "";
+    $("#f-subtitle").value = p.subtitle || "";
+    $("#f-category").value = p.category || "";
+    $("#f-date").value = p.date || today();
+    $("#f-slug").value = p.slug || "";
+    $("#f-slug").disabled = !!p.slug;
+    $("#f-answer").value = p.answer || "";
+    $("#f-body").innerHTML = p.body || "";
+    $("#f-description").value = p.description || "";
+    $("#f-keywords").value = (p.keywords || []).join("، ");
+    $("#faqList").innerHTML = "";
+    (p.faq && p.faq.length ? p.faq : [{}]).forEach(function (f) { faqRow(f.q, f.a); });
+    $("#editTitle").textContent = p.slug ? "تعديل المقال" : "مقال جديد";
+    $("#deleteBtn").hidden = !p.slug;
+    var link = $("#previewLink");
+    link.hidden = !p.slug;
+    if (p.slug) {
+      link.href = "/" + p.slug + (p.status === "published" ? "" : "?preview=1");
+      link.textContent = p.status === "published" ? "عرض المقال" : "معاينة";
+    }
+    dirty = false;
+  }
+  function openEditor(slug) {
+    editing = slug;
+    $("#editMsg").hidden = true;
+    var load = slug ? api("/api/posts/" + encodeURIComponent(slug)) : Promise.resolve({});
+    loadCategories().then(function () { return load; }).then(function (p) { fill(p); show("editView"); })
+      .catch(function (err) { message($("#listMsg"), err.message, "err"); });
+  }
+  $("#postForm").addEventListener("input", function () { dirty = true; });
+
+  // Toolbar
+  document.querySelector(".toolbar").addEventListener("mousedown", function (ev) { ev.preventDefault(); });
+  document.querySelector(".toolbar").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    $("#f-body").focus();
+    if (b.dataset.block) document.execCommand("formatBlock", false, b.dataset.block);
+    else if (b.dataset.cmd === "createLink") {
+      var url = prompt("الرابط (يبدأ بـ https:// أو / لصفحة من الموقع):", "https://");
+      if (url && url !== "https://") document.execCommand("createLink", false, url);
+    } else document.execCommand(b.dataset.cmd, false, null);
+    dirty = true;
+  });
+  // Paste as plain text so formatting from Word or websites does not come along.
+  $("#f-body").addEventListener("paste", function (ev) {
+    ev.preventDefault();
+    var text = (ev.clipboardData || window.clipboardData).getData("text/plain");
+    var html = text.split(/\r?\n\s*\r?\n|\r?\n/).filter(function (l) { return l.trim(); })
+      .map(function (l) { return "<p>" + esc(l.trim()) + "</p>"; }).join("");
+    document.execCommand("insertHTML", false, html);
+  });
+  $("#f-body").addEventListener("keydown", function () {
+    // Start with a paragraph instead of a bare text node.
+    if (!this.innerHTML.trim()) document.execCommand("formatBlock", false, "p");
+  });
+
+  function collect(status) {
+    return {
+      title: $("#f-title").value, subtitle: $("#f-subtitle").value, category: $("#f-category").value,
+      date: $("#f-date").value, slug: $("#f-slug").value.trim().toLowerCase(), answer: $("#f-answer").value,
+      body: $("#f-body").innerHTML, description: $("#f-description").value, keywords: $("#f-keywords").value,
+      faq: Array.prototype.map.call(document.querySelectorAll(".faq-item"), function (el) {
+        return { q: el.querySelector("[data-q]").value, a: el.querySelector("[data-a]").value };
+      }),
+      status: status,
+    };
+  }
+  document.querySelectorAll("[data-save]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var data = collect(btn.dataset.save);
+      if (!data.title.trim()) return message($("#editMsg"), "العنوان إجباري.", "err");
+      if (!data.category) return message($("#editMsg"), "اختاروا المجال.", "err");
+      var buttons = document.querySelectorAll("[data-save]");
+      buttons.forEach(function (b) { b.disabled = true; });
+      var req = editing
+        ? api("/api/posts/" + encodeURIComponent(editing), { method: "PUT", body: data })
+        : api("/api/posts", { method: "POST", body: data });
+      req.then(function (res) {
+        dirty = false;
+        var url = location.origin + "/" + res.slug;
+        loadList(res.status === "published" ? "تم نشر المقال: " + url : "تم حفظ المسودة.");
+      }).catch(function (err) {
+        message($("#editMsg"), err.message, "err"); window.scrollTo(0, 0);
+      }).then(function () { buttons.forEach(function (b) { b.disabled = false; }); });
+    });
+  });
+  $("#deleteBtn").addEventListener("click", function () {
+    if (!editing || !confirm("حذف هذا المقال نهائياً؟ لا يمكن التراجع.")) return;
+    api("/api/posts/" + encodeURIComponent(editing), { method: "DELETE" })
+      .then(function () { dirty = false; loadList("تم حذف المقال."); })
+      .catch(function (err) { message($("#editMsg"), err.message, "err"); });
+  });
+  window.addEventListener("beforeunload", function (ev) { if (dirty) { ev.preventDefault(); ev.returnValue = ""; } });
+})();
+</script>
+</body>
+</html>

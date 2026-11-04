@@ -1,11 +1,23 @@
 {
   "name": "lawyer-abache",
+  "main": "src/worker.js",
   "compatibility_date": "2026-09-26",
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // The Worker sees every request so it can add admin-written articles to
+    // /blog, the home page and the sitemap; everything else is passed to the
+    // static files unchanged.
+    "run_worker_first": true
   },
+  // Articles written in /admin. Wrangler creates this database automatically on
+  // the first deploy; see ADMIN.md.
+  "d1_databases": [
+    { "binding": "DB", "database_name": "cabinet-abache-blog" }
+  ],
+  "observability": { "enabled": true },
   "workers_dev": true,
   "routes": [
     { "pattern": "cabinetabache-sadik.com", "custom_domain": true },

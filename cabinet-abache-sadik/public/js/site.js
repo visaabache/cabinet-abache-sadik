@@ -236,6 +236,13 @@
     var filters = $$('[data-filter]');
     var empty = document.getElementById('noResults');
     var current = 'all';
+    // Category counts come from the posts on the page, which may include ones added from /admin.
+    filters.forEach(function (b) {
+      var cat = b.getAttribute('data-filter');
+      var n = cat === 'all' ? items.length : items.filter(function (el) { return el.getAttribute('data-cat') === cat; }).length;
+      var small = b.querySelector('small');
+      if (small) small.textContent = n;
+    });
     var normalise = function (s) {
       return (s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي');
     };
