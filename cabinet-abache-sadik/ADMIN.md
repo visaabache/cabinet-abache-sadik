@@ -33,6 +33,10 @@
 
 ## Technical notes
 
+- Deployment: Cloudflare Workers Builds is connected to `visaabache/cabinet-abache-sadik`
+  (branch `main`, root directory `cabinet-abache-sadik`, deploy command `npx wrangler deploy`).
+  Every push to `main` deploys the site; no manual upload is needed.
+
 - `src/worker.js` handles `/admin`, `/api/*`, articles stored in D1 (`/<slug>`), and injects
   published articles into `/blog`, `/` and `/sitemap.xml`. Every other request goes to
   the static files in `public/` unchanged (`run_worker_first: true`).
