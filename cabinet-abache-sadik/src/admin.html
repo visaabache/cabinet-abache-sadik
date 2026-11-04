@@ -4,202 +4,501 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
 <title>لوحة التحكم | مكتب عباش وصديق</title>
 <link rel="icon" href="/img/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0E1B2C; --ink-2: #1c2b40; --brass: #B08D57; --brass-2: #D2B98C;
-    --paper: #F5F3EE; --card: #fff; --line: #E3DED3; --muted: #6b7280;
-    --ok: #1f7a4d; --ok-bg: #e7f4ec; --err: #b42318; --err-bg: #fdecea;
+    --bg: #F4F2ED; --surface: #FFFFFF; --surface-2: #FAF8F4; --border: #E6E1D6; --border-strong: #D6CFC0;
+    --text: #0E1B2C; --text-2: #4B5563; --muted: #8A8F98;
+    --navy: #0E1B2C; --navy-2: #16263B; --brass: #B08D57; --brass-2: #D2B98C; --brass-soft: #F4ECDD;
+    --ok: #15803D; --ok-soft: #E8F5EC; --warn: #B45309; --warn-soft: #FDF3E2; --err: #B42318; --err-soft: #FDECEA;
+    --focus: 0 0 0 3px rgba(176,141,87,.35);
+    --shadow-sm: 0 1px 2px rgba(14,27,44,.06); --shadow: 0 4px 16px -6px rgba(14,27,44,.14); --shadow-lg: 0 18px 50px -18px rgba(14,27,44,.35);
+    --radius: 14px; --radius-sm: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1420; --surface: #111D2D; --surface-2: #0F1A28; --border: #22324A; --border-strong: #2E4260;
+      --text: #ECEFF4; --text-2: #B7C0CD; --muted: #7F8B9C; --brass-soft: #2A2416;
+      --ok-soft: #0F2A1B; --warn-soft: #2B200E; --err-soft: #2E1414;
+      --shadow-sm: none; --shadow: 0 4px 16px -6px rgba(0,0,0,.5); --shadow-lg: 0 18px 50px -18px rgba(0,0,0,.7);
+    }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: "IBM Plex Sans Arabic", system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
   button, input, select, textarea { font: inherit; color: inherit; }
   [hidden] { display: none !important; }
-  .top { background: var(--ink); color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .top b { font-weight: 600; }
-  .top .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 80px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
-  h1 { font-size: 1.5rem; margin: 0 0 16px; }
-  h2 { font-size: 1.15rem; margin: 0 0 12px; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid transparent; border-radius: 8px; padding: 9px 16px; cursor: pointer; font-weight: 600; text-decoration: none; background: var(--ink); color: #fff; }
-  .btn:hover { filter: brightness(1.12); }
-  .btn-brass { background: var(--brass); color: var(--ink); }
-  .btn-ghost { background: transparent; border-color: var(--line); color: var(--ink); }
-  .top .btn-ghost { color: #fff; border-color: rgba(255,255,255,.3); }
-  .btn-danger { background: transparent; color: var(--err); border-color: #f1c1bb; }
+  a { color: inherit; }
+  svg.i { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- Buttons ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: var(--radius-sm); border: 1px solid transparent; font-weight: 600; font-size: .93rem; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s, transform .05s, box-shadow .15s; }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .btn-primary { background: var(--brass); color: #1b1408; }
+  .btn-primary:hover { background: #a3804b; }
+  .btn-dark { background: var(--navy); color: #fff; }
+  .btn-dark:hover { background: var(--navy-2); }
+  .btn-outline { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
+  .btn-outline:hover { background: var(--surface-2); }
+  .btn-ghost { background: transparent; color: var(--text-2); }
+  .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+  .btn-danger { background: transparent; color: var(--err); border-color: color-mix(in srgb, var(--err) 30%, transparent); }
+  .btn-danger:hover { background: var(--err-soft); }
+  .btn-sm { height: 34px; padding: 0 12px; font-size: .86rem; }
+  .btn-icon { width: 36px; padding: 0; height: 36px; }
   .btn:disabled { opacity: .55; cursor: progress; }
-  label { display: block; font-weight: 600; margin: 16px 0 6px; }
-  .hint { color: var(--muted); font-size: .88rem; font-weight: 400; margin: 2px 0 6px; }
-  input[type=text], input[type=password], input[type=date], select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
-  input:focus, select:focus, textarea:focus, .editor:focus { outline: 2px solid var(--brass-2); outline-offset: 1px; }
-  textarea { min-height: 90px; resize: vertical; }
+  .btn.loading { position: relative; color: transparent !important; pointer-events: none; }
+  .btn.loading > * { visibility: hidden; }
+  .btn.loading::after { content: ""; position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; border: 2px solid #1b1408; border-left-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+  .btn-dark.loading::after { border-color: #fff; border-left-color: transparent; }
+  .btn .spin { width: 16px; height: 16px; border: 2px solid currentColor; border-left-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- Fields ---------- */
+  .field { margin-bottom: 18px; }
+  .label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+  .label .count, .hint .count { font-weight: 500; font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; }
+  .label .count.over { color: var(--warn); }
+  .hint { color: var(--muted); font-size: .82rem; margin: 6px 0 0; }
+  .input, .select, .textarea { width: 100%; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 12px; transition: border-color .15s, box-shadow .15s; }
+  .input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--brass); box-shadow: var(--focus); }
+  .input:disabled { background: var(--surface-2); color: var(--muted); }
+  .textarea { resize: vertical; min-height: 92px; }
+  .input-lg { font-size: 1.35rem; font-weight: 700; padding: 12px 14px; }
   .ltr { direction: ltr; text-align: left; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid var(--line); border-bottom: 0; border-radius: 8px 8px 0 0; background: #faf8f4; }
-  .toolbar button { border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
-  .editor { min-height: 320px; border: 1px solid var(--line); border-radius: 0 0 8px 8px; padding: 14px 16px; background: #fff; }
-  .editor h2 { font-size: 1.25rem; margin: 18px 0 8px; } .editor h3 { font-size: 1.08rem; margin: 14px 0 6px; }
-  .editor:empty::before { content: attr(data-placeholder); color: #9aa0a6; }
-  .faq-item { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 10px; background: #fcfbf8; }
-  .faq-item .row { display: flex; justify-content: space-between; align-items: center; }
-  .list { width: 100%; border-collapse: collapse; }
-  .list th, .list td { text-align: right; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  .list th { font-size: .85rem; color: var(--muted); font-weight: 600; }
-  .list td a { color: var(--ink); font-weight: 600; }
-  .badge { display: inline-block; font-size: .8rem; padding: 2px 10px; border-radius: 99px; }
-  .badge.published { background: var(--ok-bg); color: var(--ok); } .badge.draft { background: #eef0f3; color: var(--muted); }
-  .msg { padding: 10px 14px; border-radius: 8px; margin: 0 0 16px; }
-  .msg.ok { background: var(--ok-bg); color: var(--ok); } .msg.err { background: var(--err-bg); color: var(--err); }
-  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
-  .bar .spacer { flex: 1; }
-  .login { max-width: 400px; margin: 10vh auto; }
-  .empty { text-align: center; color: var(--muted); padding: 30px 0; }
-  .head-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
-  .head-row h1 { margin: 0; }
-  @media (max-width: 640px) { .list .hide-sm { display: none; } }
+  .slug-wrap { display: flex; align-items: stretch; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); direction: ltr; }
+  .slug-wrap span { padding: 10px 10px; background: var(--surface-2); color: var(--muted); font-size: .82rem; border-right: 1px solid var(--border); white-space: nowrap; display: flex; align-items: center; }
+  .slug-wrap input { border: 0; border-radius: 0; flex: 1; min-width: 0; }
+  .slug-wrap:focus-within { border-color: var(--brass); box-shadow: var(--focus); }
+  .slug-wrap input:focus { box-shadow: none; }
+
+  /* ---------- Login ---------- */
+  .login-page { min-height: 100%; display: grid; place-items: center; padding: 24px 16px; background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(176,141,87,.18), transparent 60%),
+      radial-gradient(900px 400px at -10% 110%, rgba(14,27,44,.10), transparent 60%), var(--bg); }
+  .login-card { width: 100%; max-width: 400px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px 28px; box-shadow: var(--shadow-lg); }
+  .login-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+  .login-brand img { width: 44px; height: auto; }
+  .login-brand b { display: block; font-size: 1.05rem; }
+  .login-brand small { color: var(--muted); }
+  .login-card h1 { font-size: 1.35rem; margin: 0 0 4px; }
+  .login-card p.sub { color: var(--text-2); margin: 0 0 22px; }
+  .pw-wrap { position: relative; }
+  .pw-wrap .btn { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); }
+  .pw-wrap .input { padding-left: 46px; }
+
+  /* ---------- App shell ---------- */
+  .app { display: grid; grid-template-columns: 248px 1fr; min-height: 100%; }
+  .side { background: var(--navy); color: #C9D2DE; display: flex; flex-direction: column; padding: 20px 14px; position: sticky; top: 0; height: 100vh; }
+  .side-brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 22px; color: #fff; }
+  .side-brand img { width: 34px; height: auto; }
+  .side-brand b { display: block; font-size: .98rem; line-height: 1.3; }
+  .side-brand small { color: var(--brass-2); font-size: .76rem; }
+  .nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav a, .nav button { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: #C9D2DE; text-decoration: none; background: transparent; border: 0; cursor: pointer; font-weight: 500; text-align: right; width: 100%; }
+  .nav a:hover, .nav button:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav .active { background: rgba(176,141,87,.18); color: #fff; }
+  .nav .active svg { color: var(--brass-2); }
+  .side-foot { margin-top: auto; border-top: 1px solid rgba(255,255,255,.08); padding-top: 12px; }
+  .main { min-width: 0; }
+  .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 14px 28px; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--border); }
+  .topbar h1 { font-size: 1.2rem; margin: 0; }
+  .topbar .crumb { color: var(--muted); font-size: .85rem; }
+  .topbar .grow { flex: 1; }
+  .content { padding: 26px 28px 80px; max-width: 1240px; }
+  .menu-btn { display: none; }
+
+  /* ---------- Dashboard ---------- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 14px; }
+  .stat .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--brass-soft); color: var(--brass); }
+  .stat .ico.ok { background: var(--ok-soft); color: var(--ok); }
+  .stat .ico.warn { background: var(--warn-soft); color: var(--warn); }
+  .stat b { display: block; font-size: 1.5rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat small { color: var(--text-2); }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+  .panel-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .search { position: relative; flex: 1; min-width: 200px; }
+  .search svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .search .input { padding-right: 38px; height: 40px; }
+  .tabs { display: inline-flex; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+  .tabs button { border: 0; background: transparent; padding: 6px 12px; border-radius: 8px; cursor: pointer; color: var(--text-2); font-weight: 500; font-size: .88rem; }
+  .tabs button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+  .tabs small { color: var(--muted); margin-inline-start: 4px; font-variant-numeric: tabular-nums; }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: var(--surface-2); }
+  .row-title { font-weight: 600; text-decoration: none; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row-title:hover { color: var(--brass); }
+  .row-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: .82rem; margin-top: 3px; align-items: center; }
+  .row-actions { display: flex; gap: 4px; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: .76rem; font-weight: 600; padding: 2px 10px; border-radius: 99px; }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge.published { background: var(--ok-soft); color: var(--ok); }
+  .badge.draft { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+  .chip { display: inline-block; padding: 1px 8px; border-radius: 6px; background: var(--brass-soft); color: var(--brass); font-size: .76rem; font-weight: 600; }
+  .empty { text-align: center; padding: 56px 20px; }
+  .empty .ico { width: 64px; height: 64px; margin: 0 auto 14px; border-radius: 18px; display: grid; place-items: center; background: var(--brass-soft); color: var(--brass); }
+  .empty .ico svg { width: 30px; height: 30px; }
+  .empty h3 { margin: 0 0 4px; }
+  .empty p { color: var(--text-2); margin: 0 0 18px; }
+  .note { color: var(--muted); font-size: .82rem; padding: 12px 16px; border-top: 1px solid var(--border); }
+  .skeleton { height: 62px; margin: 10px 16px; border-radius: 10px; background: linear-gradient(90deg, var(--surface-2), var(--border), var(--surface-2)); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* ---------- Editor ---------- */
+  .editor-grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 22px; align-items: start; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 18px; }
+  .card h3 { margin: 0 0 14px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+  .card h3 small { font-weight: 500; color: var(--muted); font-size: .8rem; }
+  .side-col { position: sticky; top: 84px; }
+  .toolbar { position: sticky; top: 70px; z-index: 5; display: flex; flex-wrap: wrap; gap: 2px; padding: 6px; background: var(--surface-2); border: 1px solid var(--border-strong); border-bottom: 0; border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+  .toolbar button { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 0; background: transparent; border-radius: 8px; cursor: pointer; color: var(--text-2); font-size: .86rem; font-weight: 500; }
+  .toolbar button:hover { background: var(--surface); color: var(--text); }
+  .toolbar button.on { background: var(--brass-soft); color: var(--brass); }
+  .toolbar .sep { width: 1px; background: var(--border); margin: 6px 4px; }
+  .editor { min-height: 380px; border: 1px solid var(--border-strong); border-radius: 0 0 var(--radius-sm) var(--radius-sm); padding: 18px 20px; background: var(--surface); line-height: 1.9; font-size: 1.02rem; }
+  .editor:focus { outline: none; border-color: var(--brass); box-shadow: var(--focus); }
+  .editor:empty::before { content: attr(data-placeholder); color: var(--muted); }
+  .editor h2 { font-size: 1.3rem; margin: 22px 0 8px; padding-inline-start: 10px; border-inline-start: 3px solid var(--brass); }
+  .editor h3 { font-size: 1.08rem; margin: 16px 0 6px; }
+  .editor p { margin: 0 0 12px; }
+  .editor a { color: var(--brass); }
+  .editor ul, .editor ol { padding-inline-start: 22px; }
+  .editor blockquote { margin: 12px 0; padding: 10px 14px; border-inline-start: 3px solid var(--border-strong); background: var(--surface-2); border-radius: 6px; }
+  .editor-foot { display: flex; justify-content: space-between; color: var(--muted); font-size: .8rem; margin-top: 8px; }
+  .faq-item { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px; background: var(--surface-2); }
+  .faq-item .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--muted); font-size: .82rem; font-weight: 600; }
+  .faq-item .input { margin-bottom: 8px; }
+  .faq-item .textarea { min-height: 70px; }
+  .publish-box .status-line { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .publish-box .actions { display: grid; gap: 8px; }
+  .publish-box .actions .btn { width: 100%; }
+  .publish-box .links { display: flex; gap: 8px; margin-top: 10px; }
+  .publish-box .links .btn { flex: 1; }
+  .dirty-dot { display: inline-flex; align-items: center; gap: 6px; color: var(--warn); font-size: .8rem; font-weight: 600; }
+  .dirty-dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .serp { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; background: var(--surface-2); }
+  .serp .site { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: var(--text-2); direction: ltr; justify-content: flex-end; }
+  .serp .site img { width: 18px; height: 18px; border-radius: 50%; background: #fff; }
+  .serp .t { color: #1a0dab; font-size: 1.05rem; line-height: 1.35; margin: 6px 0 4px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  @media (prefers-color-scheme: dark) { .serp .t { color: #8ab4f8; } }
+  .serp .d { color: var(--text-2); font-size: .84rem; line-height: 1.5; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: .86rem; }
+  .checklist li { display: flex; gap: 8px; align-items: flex-start; color: var(--text-2); }
+  .checklist li::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 3px; border-radius: 50%; border: 2px solid var(--border-strong); }
+  .checklist li.done { color: var(--text); }
+  .checklist li.done::before { border-color: var(--ok); background: var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .banner { display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); background: var(--brass-soft); border: 1px solid color-mix(in srgb, var(--brass) 35%, transparent); margin-bottom: 18px; }
+  .banner p { margin: 0; flex: 1; }
+
+  /* ---------- Toasts & dialog ---------- */
+  .toasts { position: fixed; bottom: 22px; left: 22px; z-index: 100; display: grid; gap: 10px; max-width: min(420px, calc(100vw - 44px)); }
+  .toast { display: flex; gap: 10px; align-items: flex-start; background: var(--navy); color: #fff; padding: 12px 14px; border-radius: 12px; box-shadow: var(--shadow-lg); animation: slide-in .25s ease-out; }
+  .toast.err { background: #7a1d14; }
+  .toast a { color: var(--brass-2); word-break: break-all; }
+  .toast svg { margin-top: 2px; }
+  @keyframes slide-in { from { opacity: 0; transform: translateY(10px); } }
+  dialog { border: 0; border-radius: 16px; padding: 0; width: min(420px, calc(100vw - 32px)); background: var(--surface); color: var(--text); box-shadow: var(--shadow-lg); }
+  dialog::backdrop { background: rgba(14,27,44,.45); backdrop-filter: blur(2px); }
+  .dlg-body { padding: 22px 22px 8px; }
+  .dlg-body h3 { margin: 0 0 6px; }
+  .dlg-body p { margin: 0; color: var(--text-2); }
+  .dlg-body .input { margin-top: 14px; }
+  .dlg-actions { display: flex; gap: 8px; justify-content: flex-start; padding: 16px 22px 20px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .editor-grid { grid-template-columns: 1fr; }
+    .side-col { position: static; }
+  }
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .side { position: fixed; inset: 0 0 0 auto; width: 270px; z-index: 50; transform: translateX(100%); transition: transform .2s; box-shadow: var(--shadow-lg); }
+    .app.nav-open .side { transform: none; }
+    .app.nav-open::after { content: ""; position: fixed; inset: 0; background: rgba(14,27,44,.4); z-index: 40; }
+    .menu-btn { display: inline-flex; }
+    .topbar { padding: 12px 16px; }
+    .content { padding: 18px 16px 90px; }
+    .stats { gap: 8px; }
+    .stat { padding: 12px 8px; flex-direction: column; text-align: center; gap: 6px; }
+    .stat .ico { width: 34px; height: 34px; border-radius: 10px; }
+    .stat b { font-size: 1.25rem; }
+    .stat small { font-size: .78rem; }
+    .row-actions .btn-label { display: none; }
+    .toolbar { top: 62px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <b>لوحة التحكم – المدونة</b>
-  <div class="actions" id="topActions" hidden>
-    <a class="btn btn-ghost" href="/blog" target="_blank" rel="noopener">عرض المدونة</a>
-    <button class="btn btn-ghost" type="button" id="logoutBtn">تسجيل الخروج</button>
-  </div>
-</header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M3 21l3.8-1 11-11a2.1 2.1 0 0 0-3-3l-11 11z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-bold" viewBox="0 0 24 24"><path d="M7 5h6a3.5 3.5 0 0 1 0 7H7zM7 12h7a3.5 3.5 0 0 1 0 7H7z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+  <symbol id="i-olist" viewBox="0 0 24 24"><path d="M10 6h10M10 12h10M10 18h10M4 5l1.5-1v4M3.5 14.5c.5-1 2.5-1 2.5.3 0 1-2.5 2-2.5 3.2h2.5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-2 5-4 6M14 7h4v4c0 3-2 5-4 6"/></symbol>
+  <symbol id="i-clear" viewBox="0 0 24 24"><path d="M4 7V5h12v2M10 5l-3 14M14 19H6M17 14l4 4M21 14l-4 4"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></symbol>
+  <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17h.01"/></symbol>
+</svg>
 
-<!-- Not configured yet -->
-<section class="wrap" id="setupView" hidden>
-  <div class="card">
+<!-- ============ Setup needed ============ -->
+<div class="login-page" id="setupView" hidden>
+  <div class="login-card">
+    <div class="login-brand"><img src="/img/logo-mark.png" alt=""><div><b>عباش وصديق</b><small>لوحة التحكم</small></div></div>
     <h1>لوحة التحكم غير مفعّلة بعد</h1>
-    <p id="setupText"></p>
+    <p class="sub" id="setupText"></p>
   </div>
-</section>
+</div>
 
-<!-- Login -->
-<section class="wrap" id="loginView" hidden>
-  <form class="card login" id="loginForm">
-    <h1>تسجيل الدخول</h1>
-    <div class="msg err" id="loginMsg" hidden></div>
-    <label for="password">كلمة المرور</label>
-    <input id="password" type="password" autocomplete="current-password" required>
-    <div class="bar"><button class="btn btn-brass" type="submit">دخول</button></div>
-  </form>
-</section>
-
-<!-- Articles list -->
-<section class="wrap" id="listView" hidden>
-  <div class="head-row">
-    <h1>المقالات</h1>
-    <button class="btn btn-brass" type="button" id="newBtn">+ مقال جديد</button>
-  </div>
-  <div class="msg" id="listMsg" hidden></div>
-  <div class="card">
-    <table class="list">
-      <thead><tr><th>العنوان</th><th class="hide-sm">المجال</th><th class="hide-sm">التاريخ</th><th>الحالة</th></tr></thead>
-      <tbody id="postRows"></tbody>
-    </table>
-    <p class="empty" id="emptyList" hidden>لا توجد مقالات بعد. اضغطوا على «مقال جديد» لكتابة أول مقال.</p>
-    <p class="hint">تظهر هنا المقالات التي تكتبونها من لوحة التحكم. أما المقالات التي كانت على الموقع من قبل فهي جزء من ملفاته ولا تُعدَّل من هنا.</p>
-  </div>
-</section>
-
-<!-- Editor -->
-<section class="wrap" id="editView" hidden>
-  <div class="head-row">
-    <h1 id="editTitle">مقال جديد</h1>
-    <button class="btn btn-ghost" type="button" id="backBtn">→ رجوع للائحة</button>
-  </div>
-  <div class="msg" id="editMsg" hidden></div>
-  <form class="card" id="postForm" novalidate>
-    <label for="f-title">العنوان (السؤال كما يكتبه الناس في Google) *</label>
-    <input id="f-title" type="text" maxlength="200" required placeholder="مثال: شحال كتاخد دعوى الطلاق للشقاق في 2026؟">
-
-    <label for="f-subtitle">عنوان فرعي</label>
-    <input id="f-subtitle" type="text" maxlength="200" placeholder="مثال: المدة القانونية والمراحل وما يؤخر الحكم">
-
-    <div class="grid">
-      <div>
-        <label for="f-category">المجال *</label>
-        <select id="f-category" required></select>
+<!-- ============ Login ============ -->
+<div class="login-page" id="loginView" hidden>
+  <form class="login-card" id="loginForm">
+    <div class="login-brand"><img src="/img/logo-mark.png" alt=""><div><b>عباش وصديق</b><small>Cabinet d'avocats</small></div></div>
+    <h1>مرحباً بعودتكم</h1>
+    <p class="sub">سجلوا الدخول لإدارة مقالات المدونة.</p>
+    <div class="field">
+      <label class="label" for="password">كلمة المرور</label>
+      <div class="pw-wrap">
+        <input class="input" id="password" type="password" autocomplete="current-password" required autofocus>
+        <button class="btn btn-ghost btn-icon" type="button" id="pwToggle" aria-label="إظهار كلمة المرور"><svg class="i"><use href="#i-eye"/></svg></button>
       </div>
-      <div>
-        <label for="f-date">تاريخ النشر</label>
-        <input id="f-date" type="date">
+      <p class="hint" id="loginMsg" role="alert" style="color:var(--err)" hidden></p>
+    </div>
+    <button class="btn btn-dark" type="submit" style="width:100%;height:44px">دخول</button>
+  </form>
+</div>
+
+<!-- ============ App ============ -->
+<div class="app" id="app" hidden>
+  <aside class="side" aria-label="القائمة">
+    <div class="side-brand"><img src="/img/logo-mark.png" alt=""><div><b>عباش وصديق</b><small>لوحة التحكم</small></div></div>
+    <nav class="nav">
+      <a href="#/" data-nav="list"><svg class="i"><use href="#i-doc"/></svg>المقالات</a>
+      <a href="#/new" data-nav="new"><svg class="i"><use href="#i-plus"/></svg>مقال جديد</a>
+      <a href="/blog" target="_blank" rel="noopener"><svg class="i"><use href="#i-globe"/></svg>عرض المدونة<svg class="i" style="width:14px;margin-inline-start:auto;opacity:.6"><use href="#i-ext"/></svg></a>
+    </nav>
+    <div class="side-foot nav">
+      <button type="button" id="logoutBtn"><svg class="i"><use href="#i-logout"/></svg>تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- ---------- List ---------- -->
+    <section id="listView" hidden>
+      <header class="topbar">
+        <button class="btn btn-ghost btn-icon menu-btn" type="button" data-menu aria-label="القائمة"><svg class="i"><use href="#i-menu"/></svg></button>
+        <div><h1>المقالات</h1><div class="crumb">إدارة مقالات المدونة القانونية</div></div>
+        <span class="grow"></span>
+        <a class="btn btn-primary" href="#/new"><svg class="i"><use href="#i-plus"/></svg><span>مقال جديد</span></a>
+      </header>
+      <div class="content">
+        <div class="stats">
+          <div class="stat"><div class="ico"><svg class="i"><use href="#i-doc"/></svg></div><div><b id="statAll">–</b><small>كل المقالات</small></div></div>
+          <div class="stat"><div class="ico ok"><svg class="i"><use href="#i-check"/></svg></div><div><b id="statPub">–</b><small>منشورة</small></div></div>
+          <div class="stat"><div class="ico warn"><svg class="i"><use href="#i-pen"/></svg></div><div><b id="statDraft">–</b><small>مسودات</small></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div class="search"><svg class="i"><use href="#i-search"/></svg><label class="sr" for="q">بحث</label><input class="input" id="q" type="search" placeholder="ابحثوا بالعنوان…"></div>
+            <div class="tabs" role="group" aria-label="تصفية حسب الحالة">
+              <button type="button" data-filter="all" aria-pressed="true">الكل</button>
+              <button type="button" data-filter="published" aria-pressed="false">منشورة</button>
+              <button type="button" data-filter="draft" aria-pressed="false">مسودات</button>
+            </div>
+          </div>
+          <div id="listLoading"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+          <ul class="rows" id="postRows"></ul>
+          <div class="empty" id="emptyList" hidden>
+            <div class="ico"><svg class="i"><use href="#i-pen"/></svg></div>
+            <h3>لا توجد مقالات بعد</h3>
+            <p>اكتبوا أول مقال يجيب على سؤال يبحث عنه موكلوكم في Google.</p>
+            <a class="btn btn-primary" href="#/new"><svg class="i"><use href="#i-plus"/></svg>كتابة أول مقال</a>
+          </div>
+          <div class="empty" id="noMatch" hidden><h3>لا توجد نتائج</h3><p>جرّبوا كلمة أخرى أو اختاروا «الكل».</p></div>
+          <p class="note">تظهر هنا المقالات التي تُكتب من لوحة التحكم. المقالات التي كانت على الموقع من قبل جزء من ملفاته ولا تُعدَّل من هنا.</p>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <label for="f-slug">رابط المقال</label>
-    <p class="hint">حروف لاتينية صغيرة وأرقام وشرطة فقط، مثل: <span class="ltr">divorce-chiqaq-duree</span>. اتركوه فارغاً ليُنشأ تلقائياً. لا يمكن تغييره بعد الحفظ.</p>
-    <input id="f-slug" class="ltr" type="text" maxlength="90" placeholder="article-..." pattern="[a-z0-9]+(-[a-z0-9]+)*">
+    <!-- ---------- Editor ---------- -->
+    <section id="editView" hidden>
+      <header class="topbar">
+        <button class="btn btn-ghost btn-icon menu-btn" type="button" data-menu aria-label="القائمة"><svg class="i"><use href="#i-menu"/></svg></button>
+        <a class="btn btn-ghost btn-icon" href="#/" aria-label="رجوع"><svg class="i"><use href="#i-back"/></svg></a>
+        <div><h1 id="editTitle">مقال جديد</h1><div class="crumb" id="editCrumb">المقالات / جديد</div></div>
+        <span class="grow"></span>
+        <span class="dirty-dot" id="dirtyDot" hidden>تعديلات غير محفوظة</span>
+        <button class="btn btn-outline btn-sm" type="button" data-save="draft">حفظ كمسودة</button>
+        <button class="btn btn-primary btn-sm" type="button" data-save="published"><svg class="i"><use href="#i-send"/></svg><span id="publishLabel">نشر</span></button>
+      </header>
+      <div class="content">
+        <div class="banner" id="restoreBanner" hidden>
+          <svg class="i" style="color:var(--brass)"><use href="#i-undo"/></svg>
+          <p>وجدنا نسخة غير محفوظة من مقال كنتم تكتبونه.</p>
+          <button class="btn btn-dark btn-sm" type="button" id="restoreBtn">استرجاعها</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="discardBtn">تجاهل</button>
+        </div>
+        <form class="editor-grid" id="postForm" novalidate autocomplete="off">
+          <div>
+            <div class="card">
+              <div class="field">
+                <label class="label" for="f-title">العنوان <span class="count" data-count-for="f-title" data-max="70"></span></label>
+                <input class="input input-lg" id="f-title" type="text" maxlength="200" placeholder="السؤال كما يكتبه الناس في Google…">
+                <p class="hint">مثال: شحال كتاخد دعوى الطلاق للشقاق في 2026؟</p>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label class="label" for="f-subtitle">عنوان فرعي <span class="count" style="font-weight:400">اختياري</span></label>
+                <input class="input" id="f-subtitle" type="text" maxlength="200" placeholder="مثال: المدة القانونية والمراحل وما يؤخر الحكم">
+              </div>
+            </div>
 
-    <label for="f-answer">الجواب باختصار</label>
-    <p class="hint">فقرة قصيرة تجيب على السؤال مباشرة. تظهر في أعلى المقال مع زر واتساب. اختياري لكنه مستحسن.</p>
-    <textarea id="f-answer" maxlength="1500"></textarea>
+            <div class="card">
+              <h3><svg class="i" style="color:var(--brass)"><use href="#i-check"/></svg>الجواب باختصار <small>يظهر في أعلى المقال مع زر واتساب</small></h3>
+              <textarea class="textarea" id="f-answer" maxlength="1500" placeholder="فقرة قصيرة تجيب على السؤال مباشرة…"></textarea>
+              <p class="hint"><span data-count-for="f-answer" data-max="400" class="count"></span></p>
+            </div>
 
-    <label>نص المقال</label>
-    <p class="hint">استعملوا «عنوان قسم» لكل جزء من المقال؛ تظهر هذه العناوين في فهرس المقال.</p>
-    <div class="toolbar" role="toolbar" aria-label="أدوات التنسيق">
-      <button type="button" data-block="h2">عنوان قسم</button>
-      <button type="button" data-block="h3">عنوان صغير</button>
-      <button type="button" data-block="p">فقرة</button>
-      <button type="button" data-cmd="bold"><b>غامق</b></button>
-      <button type="button" data-cmd="insertUnorderedList">• قائمة</button>
-      <button type="button" data-cmd="insertOrderedList">1. قائمة مرقمة</button>
-      <button type="button" data-cmd="createLink">رابط</button>
-      <button type="button" data-cmd="removeFormat">إزالة التنسيق</button>
-    </div>
-    <div class="editor" id="f-body" contenteditable="true" data-placeholder="اكتبوا نص المقال هنا…"></div>
+            <div class="card">
+              <h3><svg class="i" style="color:var(--brass)"><use href="#i-doc"/></svg>نص المقال <small>كل «عنوان قسم» يظهر في فهرس المقال</small></h3>
+              <div class="toolbar" role="toolbar" aria-label="أدوات التنسيق">
+                <button type="button" data-block="h2" title="عنوان قسم">عنوان قسم</button>
+                <button type="button" data-block="h3" title="عنوان صغير">عنوان صغير</button>
+                <button type="button" data-block="p" title="فقرة عادية">فقرة</button>
+                <span class="sep"></span>
+                <button type="button" data-cmd="bold" title="غامق (Ctrl+B)" aria-label="غامق"><svg class="i"><use href="#i-bold"/></svg></button>
+                <button type="button" data-cmd="insertUnorderedList" title="قائمة" aria-label="قائمة"><svg class="i"><use href="#i-list"/></svg></button>
+                <button type="button" data-cmd="insertOrderedList" title="قائمة مرقمة" aria-label="قائمة مرقمة"><svg class="i"><use href="#i-olist"/></svg></button>
+                <button type="button" data-block="blockquote" title="اقتباس" aria-label="اقتباس"><svg class="i"><use href="#i-quote"/></svg></button>
+                <button type="button" data-cmd="createLink" title="رابط" aria-label="رابط"><svg class="i"><use href="#i-link"/></svg></button>
+                <span class="sep"></span>
+                <button type="button" data-cmd="undo" title="تراجع (Ctrl+Z)" aria-label="تراجع"><svg class="i"><use href="#i-undo"/></svg></button>
+                <button type="button" data-cmd="redo" title="إعادة" aria-label="إعادة"><svg class="i"><use href="#i-redo"/></svg></button>
+                <button type="button" data-cmd="removeFormat" title="إزالة التنسيق" aria-label="إزالة التنسيق"><svg class="i"><use href="#i-clear"/></svg></button>
+              </div>
+              <div class="editor" id="f-body" contenteditable="true" role="textbox" aria-multiline="true" aria-label="نص المقال" data-placeholder="ابدؤوا الكتابة هنا… استعملوا «عنوان قسم» لتقسيم المقال إلى أجزاء."></div>
+              <div class="editor-foot"><span id="wordCount">0 كلمة</span><span id="readTime"></span></div>
+            </div>
 
-    <label>الأسئلة الشائعة</label>
-    <p class="hint">تظهر في آخر المقال وتساعد على الظهور في Google.</p>
-    <div id="faqList"></div>
-    <button class="btn btn-ghost" type="button" id="addFaq">+ إضافة سؤال</button>
+            <div class="card">
+              <h3><svg class="i" style="color:var(--brass)"><use href="#i-q"/></svg>الأسئلة الشائعة <small>تظهر في آخر المقال وفي نتائج Google</small></h3>
+              <div id="faqList"></div>
+              <button class="btn btn-outline btn-sm" type="button" id="addFaq"><svg class="i"><use href="#i-plus"/></svg>إضافة سؤال</button>
+            </div>
+          </div>
 
-    <label for="f-description">وصف المقال في Google</label>
-    <p class="hint">جملة أو جملتان (حوالي 160 حرفاً). اتركوه فارغاً ليؤخذ من «الجواب باختصار».</p>
-    <textarea id="f-description" maxlength="300"></textarea>
+          <div class="side-col">
+            <div class="card publish-box">
+              <div class="status-line"><b>النشر</b><span class="badge draft" id="statusBadge">مسودة</span></div>
+              <div class="field">
+                <label class="label" for="f-category">المجال</label>
+                <select class="select" id="f-category"></select>
+              </div>
+              <div class="field">
+                <label class="label" for="f-date">تاريخ النشر</label>
+                <input class="input" id="f-date" type="date">
+              </div>
+              <div class="field">
+                <label class="label" for="f-slug">رابط المقال</label>
+                <div class="slug-wrap"><span>/</span><input class="input" id="f-slug" type="text" maxlength="90" placeholder="auto" pattern="[a-z0-9]+(-[a-z0-9]+)*" spellcheck="false"></div>
+                <p class="hint" id="slugHint">حروف لاتينية صغيرة وأرقام وشرطة. اتركوه فارغاً ليُنشأ تلقائياً. لا يتغير بعد الحفظ.</p>
+              </div>
+              <div class="actions">
+                <button class="btn btn-primary" type="button" data-save="published"><svg class="i"><use href="#i-send"/></svg><span class="publish-text">نشر المقال</span></button>
+                <button class="btn btn-outline" type="button" data-save="draft">حفظ كمسودة</button>
+              </div>
+              <div class="links">
+                <a class="btn btn-ghost btn-sm" id="previewLink" target="_blank" rel="noopener" hidden><svg class="i"><use href="#i-eye"/></svg><span>معاينة</span></a>
+                <button class="btn btn-danger btn-sm" type="button" id="deleteBtn" hidden><svg class="i"><use href="#i-trash"/></svg>حذف</button>
+              </div>
+            </div>
 
-    <label for="f-keywords">كلمات مفتاحية</label>
-    <p class="hint">مفصولة بفاصلة، مثل: الطلاق للشقاق، مدونة الأسرة، محامي طلاق</p>
-    <input id="f-keywords" type="text">
+            <div class="card">
+              <h3><svg class="i" style="color:var(--brass)"><use href="#i-globe"/></svg>الظهور في Google</h3>
+              <div class="serp" aria-label="معاينة نتيجة البحث">
+                <div class="site"><span>cabinetabache-sadik.com › <span id="serpSlug">…</span></span><img src="/img/favicon.ico" alt=""></div>
+                <div class="t" id="serpTitle">عنوان المقال</div>
+                <div class="d" id="serpDesc">وصف المقال…</div>
+              </div>
+              <div class="field" style="margin-top:14px">
+                <label class="label" for="f-description">الوصف <span class="count" data-count-for="f-description" data-max="160"></span></label>
+                <textarea class="textarea" id="f-description" maxlength="300" placeholder="يُؤخذ من «الجواب باختصار» إذا تُرك فارغاً"></textarea>
+              </div>
+              <div class="field" style="margin-bottom:0">
+                <label class="label" for="f-keywords">كلمات مفتاحية</label>
+                <input class="input" id="f-keywords" type="text" placeholder="الطلاق للشقاق، مدونة الأسرة">
+                <p class="hint">مفصولة بفاصلة.</p>
+              </div>
+            </div>
 
-    <div class="bar">
-      <button class="btn btn-brass" type="button" data-save="published">نشر المقال</button>
-      <button class="btn btn-ghost" type="button" data-save="draft">حفظ كمسودة</button>
-      <a class="btn btn-ghost" id="previewLink" target="_blank" rel="noopener" hidden>معاينة</a>
-      <span class="spacer"></span>
-      <button class="btn btn-danger" type="button" id="deleteBtn" hidden>حذف المقال</button>
+            <div class="card">
+              <h3>قبل النشر</h3>
+              <ul class="checklist" id="checklist"></ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<dialog id="dlg">
+  <form method="dialog">
+    <div class="dlg-body"><h3 id="dlgTitle"></h3><p id="dlgText"></p><input class="input ltr" id="dlgInput" hidden></div>
+    <div class="dlg-actions">
+      <button class="btn btn-dark" value="ok" id="dlgOk">تأكيد</button>
+      <button class="btn btn-ghost" value="cancel">إلغاء</button>
     </div>
   </form>
-</section>
+</dialog>
 
 <script>
 (function () {
-  var $ = function (s) { return document.querySelector(s); };
-  var views = ["setupView", "loginView", "listView", "editView"];
+  "use strict";
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var DRAFT_KEY = "admin-unsaved-post";
   var categories = {};
-  var editing = null;   // slug of the article being edited, or null for a new one
+  var posts = [];
+  var filter = "all";
+  var editing = null;      // slug being edited, or null for a new article
+  var current = {};        // last saved state of the open article
   var dirty = false;
 
-  function show(id) {
-    views.forEach(function (v) { $("#" + v).hidden = v !== id; });
-    $("#topActions").hidden = !(id === "listView" || id === "editView");
-    window.scrollTo(0, 0);
-  }
-  function message(el, text, kind) {
-    el.textContent = text; el.className = "msg " + (kind || "ok"); el.hidden = !text;
-  }
+  // ---------- helpers
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
   }
+  function icon(name) { return '<svg class="i"><use href="#i-' + name + '"/></svg>'; }
   function api(path, opts) {
     opts = opts || {};
     return fetch(path, {
@@ -209,43 +508,104 @@
       credentials: "same-origin",
     }).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (data) {
-        if (res.status === 401 && path !== "/api/login") { show("loginView"); throw new Error("انتهت الجلسة، سجلوا الدخول من جديد."); }
-        if (!res.ok) { var err = new Error(data.error || "حدث خطأ، أعيدوا المحاولة."); err.data = data; err.status = res.status; throw err; }
+        if (res.status === 401 && path !== "/api/login") { showLogin(); throw new Error("انتهت الجلسة، سجلوا الدخول من جديد."); }
+        if (!res.ok) { var err = new Error(data.error || "حدث خطأ، أعيدوا المحاولة."); err.data = data; throw err; }
         return data;
       });
     });
   }
-  function today() { return new Date().toISOString().slice(0, 10); }
+  function toast(html, kind) {
+    var el = document.createElement("div");
+    el.className = "toast" + (kind === "err" ? " err" : "");
+    el.innerHTML = icon(kind === "err" ? "alert" : "check") + "<div>" + html + "</div>";
+    $("#toasts").appendChild(el);
+    setTimeout(function () { el.remove(); }, kind === "err" ? 7000 : 5000);
+  }
+  function dialog(title, text, opts) {
+    opts = opts || {};
+    var d = $("#dlg");
+    $("#dlgTitle").textContent = title;
+    $("#dlgText").textContent = text || "";
+    var input = $("#dlgInput");
+    input.hidden = !opts.input; input.value = opts.value || "";
+    $("#dlgOk").textContent = opts.ok || "تأكيد";
+    $("#dlgOk").className = "btn " + (opts.danger ? "btn-danger" : "btn-dark");
+    return new Promise(function (resolve) {
+      d.onclose = function () { resolve(d.returnValue === "ok" ? (opts.input ? input.value : true) : null); };
+      d.returnValue = "";
+      d.showModal();
+      if (opts.input) { input.focus(); input.select(); }
+    });
+  }
+  function dateAr(iso) {
+    if (!iso) return "";
+    var m = ["يناير","فبراير","مارس","أبريل","ماي","يونيو","يوليوز","غشت","شتنبر","أكتوبر","نونبر","دجنبر"];
+    var p = iso.split("-").map(Number);
+    return p[2] + " " + m[p[1] - 1] + " " + p[0];
+  }
+  function today() { var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); }
+  function plain(html) { var d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+  function store(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function load(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+
+  // ---------- views & routing
+  function showOnly(id) {
+    ["setupView", "loginView", "app"].forEach(function (v) { $("#" + v).hidden = v !== id; });
+  }
+  function showLogin() { showOnly("loginView"); setTimeout(function () { $("#password").focus(); }, 50); }
+  function route() {
+    var h = location.hash || "#/";
+    $("#app").classList.remove("nav-open");
+    $$(".nav [data-nav]").forEach(function (a) { a.classList.toggle("active", (h === "#/new" ? "new" : h.indexOf("#/edit/") === 0 ? "" : "list") === a.dataset.nav); });
+    if (h === "#/new") return openEditor(null);
+    if (h.indexOf("#/edit/") === 0) return openEditor(decodeURIComponent(h.slice(7)));
+    return showList();
+  }
+  window.addEventListener("hashchange", function () {
+    if (dirty && !confirm("لديكم تعديلات غير محفوظة. المغادرة على أي حال؟")) {
+      history.replaceState(null, "", editing ? "#/edit/" + encodeURIComponent(editing) : "#/new");
+      return;
+    }
+    setDirty(false);
+    route();
+  });
+  $$("[data-menu]").forEach(function (b) { b.addEventListener("click", function () { $("#app").classList.toggle("nav-open"); }); });
+  $("#app").addEventListener("click", function (ev) { if (ev.target === $("#app")) $("#app").classList.remove("nav-open"); });
 
   // ---------- start
   api("/api/session").then(function (s) {
-    if (s.authenticated) loadList(); else show("loginView");
+    if (!s.authenticated) return showLogin();
+    return loadCategories().then(function () { showOnly("app"); route(); });
   }).catch(function (err) {
     if (err.data && err.data.error === "not_configured") {
       var missing = [];
       if (!err.data.db) missing.push("قاعدة البيانات (D1)");
-      if (!err.data.password) missing.push("كلمة مرور المسؤول (ADMIN_PASSWORD)");
-      $("#setupText").textContent = "يجب إعداد ما يلي في Cloudflare قبل استعمال لوحة التحكم: " + missing.join(" و") + ". راجعوا ملف ADMIN.md في المستودع.";
-      show("setupView");
-    } else if (!$("#loginView").hidden) {
-      // already showing login
-    } else {
-      show("loginView");
-    }
+      if (!err.data.password) missing.push("كلمة مرور المسؤول (ADMIN_PASSWORD) كـ Secret");
+      $("#setupText").textContent = "يجب إعداد ما يلي في Cloudflare: " + missing.join(" و") + ". راجعوا ملف ADMIN.md.";
+      showOnly("setupView");
+    } else if ($("#loginView").hidden) showLogin();
   });
 
   // ---------- login / logout
+  $("#pwToggle").addEventListener("click", function () {
+    var p = $("#password"), show = p.type === "password";
+    p.type = show ? "text" : "password";
+    this.innerHTML = icon(show ? "eye-off" : "eye");
+    this.setAttribute("aria-label", show ? "إخفاء كلمة المرور" : "إظهار كلمة المرور");
+  });
   $("#loginForm").addEventListener("submit", function (ev) {
     ev.preventDefault();
-    var btn = ev.target.querySelector("button"); btn.disabled = true;
+    var btn = $("button[type=submit]", this);
+    btn.disabled = true; btn.classList.add("loading");
     api("/api/login", { method: "POST", body: { password: $("#password").value } })
-      .then(function () { $("#password").value = ""; $("#loginMsg").hidden = true; loadList(); })
-      .catch(function (err) { message($("#loginMsg"), err.message, "err"); })
-      .then(function () { btn.disabled = false; });
+      .then(function () { $("#password").value = ""; $("#loginMsg").hidden = true; return loadCategories(); })
+      .then(function () { showOnly("app"); route(); })
+      .catch(function (err) { var m = $("#loginMsg"); m.textContent = err.message; m.hidden = false; })
+      .then(function () { btn.disabled = false; btn.classList.remove("loading"); });
   });
   $("#logoutBtn").addEventListener("click", function () {
     if (dirty && !confirm("لديكم تعديلات غير محفوظة. الخروج على أي حال؟")) return;
-    api("/api/logout", { method: "POST" }).then(function () { dirty = false; show("loginView"); });
+    api("/api/logout", { method: "POST" }).then(function () { setDirty(false); location.hash = "#/"; showLogin(); });
   });
 
   // ---------- list
@@ -257,137 +617,304 @@
         Object.keys(c).map(function (k) { return '<option value="' + esc(k) + '">' + esc(c[k]) + "</option>"; }).join("");
     });
   }
-  function loadList(notice) {
-    return loadCategories().then(function () { return api("/api/posts"); }).then(function (posts) {
-      $("#postRows").innerHTML = posts.map(function (p) {
-        return "<tr><td><a href=\"#\" data-edit=\"" + esc(p.slug) + "\">" + esc(p.title) + "</a></td>" +
-          "<td class=\"hide-sm\">" + esc(categories[p.category] || p.category) + "</td>" +
-          "<td class=\"hide-sm\">" + esc(p.date) + "</td>" +
-          "<td><span class=\"badge " + esc(p.status) + "\">" + (p.status === "published" ? "منشور" : "مسودة") + "</span></td></tr>";
-      }).join("");
-      $("#emptyList").hidden = posts.length > 0;
-      message($("#listMsg"), notice || "", "ok");
-      show("listView");
-    }).catch(function (err) { message($("#listMsg"), err.message, "err"); show("listView"); });
+  function showList() {
+    $("#listView").hidden = false; $("#editView").hidden = true;
+    $("#listLoading").hidden = false; $("#postRows").innerHTML = ""; $("#emptyList").hidden = true; $("#noMatch").hidden = true;
+    window.scrollTo(0, 0);
+    api("/api/posts").then(function (list) {
+      posts = list;
+      var pub = list.filter(function (p) { return p.status === "published"; }).length;
+      $("#statAll").textContent = list.length; $("#statPub").textContent = pub; $("#statDraft").textContent = list.length - pub;
+      renderRows();
+    }).catch(function (err) { toast(esc(err.message), "err"); })
+      .then(function () { $("#listLoading").hidden = true; });
   }
-  $("#postRows").addEventListener("click", function (ev) {
-    var a = ev.target.closest("[data-edit]");
-    if (a) { ev.preventDefault(); openEditor(a.getAttribute("data-edit")); }
-  });
-  $("#newBtn").addEventListener("click", function () { openEditor(null); });
-  $("#backBtn").addEventListener("click", function () {
-    if (dirty && !confirm("لديكم تعديلات غير محفوظة. الرجوع على أي حال؟")) return;
-    dirty = false; loadList();
+  function renderRows() {
+    var term = $("#q").value.trim();
+    var shown = posts.filter(function (p) {
+      return (filter === "all" || p.status === filter) && (!term || p.title.indexOf(term) !== -1 || p.slug.indexOf(term) !== -1);
+    });
+    $("#postRows").innerHTML = shown.map(function (p) {
+      var url = "/" + p.slug + (p.status === "published" ? "" : "?preview=1");
+      return '<li class="row"><div style="min-width:0">' +
+        '<a class="row-title" href="#/edit/' + encodeURIComponent(p.slug) + '">' + esc(p.title) + "</a>" +
+        '<div class="row-meta"><span class="badge ' + esc(p.status) + '">' + (p.status === "published" ? "منشور" : "مسودة") + "</span>" +
+        '<span class="chip">' + esc(categories[p.category] || p.category) + "</span><span>" + esc(dateAr(p.date)) + '</span><span class="ltr">/' + esc(p.slug) + "</span></div></div>" +
+        '<div class="row-actions">' +
+        '<a class="btn btn-ghost btn-sm" href="' + esc(url) + '" target="_blank" rel="noopener" title="عرض">' + icon("eye") + '<span class="btn-label">عرض</span></a>' +
+        '<a class="btn btn-outline btn-sm" href="#/edit/' + encodeURIComponent(p.slug) + '">' + icon("edit") + '<span class="btn-label">تعديل</span></a>' +
+        "</div></li>";
+    }).join("");
+    $("#emptyList").hidden = posts.length > 0;
+    $("#noMatch").hidden = !(posts.length > 0 && shown.length === 0);
+  }
+  $("#q").addEventListener("input", renderRows);
+  $$(".tabs [data-filter]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filter = b.dataset.filter;
+      $$(".tabs [data-filter]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      renderRows();
+    });
   });
 
   // ---------- editor
+  function setDirty(v) {
+    dirty = v;
+    $("#dirtyDot").hidden = !v;
+    if (!v && !editing) store(DRAFT_KEY, null);
+  }
   function faqRow(q, a) {
     var div = document.createElement("div");
     div.className = "faq-item";
-    div.innerHTML = '<div class="row"><b>سؤال</b><button type="button" class="btn btn-danger" data-remove>حذف</button></div>' +
-      '<input type="text" maxlength="300" placeholder="السؤال" data-q>' +
-      '<textarea maxlength="2000" placeholder="الجواب" data-a style="margin-top:8px"></textarea>';
-    div.querySelector("[data-q]").value = q || "";
-    div.querySelector("[data-a]").value = a || "";
+    div.innerHTML = '<div class="head"><span>سؤال</span><button type="button" class="btn btn-ghost btn-icon" data-remove aria-label="حذف السؤال">' + icon("trash") + "</button></div>" +
+      '<input class="input" type="text" maxlength="300" placeholder="السؤال" data-q>' +
+      '<textarea class="textarea" maxlength="2000" placeholder="الجواب" data-a></textarea>';
+    $("[data-q]", div).value = q || "";
+    $("[data-a]", div).value = a || "";
     $("#faqList").appendChild(div);
+    return div;
   }
   $("#faqList").addEventListener("click", function (ev) {
-    if (ev.target.matches("[data-remove]")) { ev.target.closest(".faq-item").remove(); dirty = true; }
+    var b = ev.target.closest("[data-remove]");
+    if (b) { b.closest(".faq-item").remove(); changed(); }
   });
-  $("#addFaq").addEventListener("click", function () { faqRow(); dirty = true; });
+  $("#addFaq").addEventListener("click", function () { $("[data-q]", faqRow()).focus(); changed(); });
 
   function fill(p) {
+    current = p;
     $("#f-title").value = p.title || "";
     $("#f-subtitle").value = p.subtitle || "";
     $("#f-category").value = p.category || "";
     $("#f-date").value = p.date || today();
     $("#f-slug").value = p.slug || "";
-    $("#f-slug").disabled = !!p.slug;
+    $("#f-slug").disabled = !!editing;
+    $("#slugHint").hidden = !!editing;
     $("#f-answer").value = p.answer || "";
     $("#f-body").innerHTML = p.body || "";
     $("#f-description").value = p.description || "";
-    $("#f-keywords").value = (p.keywords || []).join("، ");
+    $("#f-keywords").value = (p.keywords || []).join ? (p.keywords || []).join("، ") : (p.keywords || "");
     $("#faqList").innerHTML = "";
     (p.faq && p.faq.length ? p.faq : [{}]).forEach(function (f) { faqRow(f.q, f.a); });
-    $("#editTitle").textContent = p.slug ? "تعديل المقال" : "مقال جديد";
-    $("#deleteBtn").hidden = !p.slug;
+    var published = p.status === "published";
+    $("#editTitle").textContent = editing ? "تعديل المقال" : "مقال جديد";
+    $("#editCrumb").textContent = "المقالات / " + (editing ? (p.title || editing) : "جديد");
+    $("#statusBadge").className = "badge " + (published ? "published" : "draft");
+    $("#statusBadge").textContent = published ? "منشور" : "مسودة";
+    $("#publishLabel").textContent = published ? "تحديث" : "نشر";
+    $(".publish-text").textContent = published ? "تحديث المقال المنشور" : "نشر المقال";
+    $$("[data-save=draft]").forEach(function (b) { b.textContent = published ? "إرجاع إلى مسودة" : "حفظ كمسودة"; });
+    $("#deleteBtn").hidden = !editing;
     var link = $("#previewLink");
-    link.hidden = !p.slug;
-    if (p.slug) {
-      link.href = "/" + p.slug + (p.status === "published" ? "" : "?preview=1");
-      link.textContent = p.status === "published" ? "عرض المقال" : "معاينة";
+    link.hidden = !editing;
+    if (editing) {
+      link.href = "/" + editing + (published ? "" : "?preview=1");
+      $("span", link).textContent = published ? "عرض المقال" : "معاينة";
     }
-    dirty = false;
+    refresh();
   }
   function openEditor(slug) {
     editing = slug;
-    $("#editMsg").hidden = true;
-    var load = slug ? api("/api/posts/" + encodeURIComponent(slug)) : Promise.resolve({});
-    loadCategories().then(function () { return load; }).then(function (p) { fill(p); show("editView"); })
-      .catch(function (err) { message($("#listMsg"), err.message, "err"); });
+    $("#listView").hidden = true; $("#editView").hidden = false;
+    window.scrollTo(0, 0);
+    var saved = !slug && load(DRAFT_KEY);
+    $("#restoreBanner").hidden = !(saved && (saved.title || plain(saved.body || "")));
+    var req = slug ? api("/api/posts/" + encodeURIComponent(slug)) : Promise.resolve({});
+    req.then(function (p) { fill(p); setDirty(false); if (!slug) $("#f-title").focus(); })
+      .catch(function (err) { toast(esc(err.message), "err"); location.hash = "#/"; });
   }
-  $("#postForm").addEventListener("input", function () { dirty = true; });
+  $("#restoreBtn").addEventListener("click", function () {
+    var saved = load(DRAFT_KEY); if (!saved) return;
+    saved.keywords = saved.keywords || "";
+    fill(saved); $("#restoreBanner").hidden = true; setDirty(true);
+  });
+  $("#discardBtn").addEventListener("click", function () { store(DRAFT_KEY, null); $("#restoreBanner").hidden = true; });
 
-  // Toolbar
-  document.querySelector(".toolbar").addEventListener("mousedown", function (ev) { ev.preventDefault(); });
-  document.querySelector(".toolbar").addEventListener("click", function (ev) {
-    var b = ev.target.closest("button"); if (!b) return;
-    $("#f-body").focus();
-    if (b.dataset.block) document.execCommand("formatBlock", false, b.dataset.block);
-    else if (b.dataset.cmd === "createLink") {
-      var url = prompt("الرابط (يبدأ بـ https:// أو / لصفحة من الموقع):", "https://");
-      if (url && url !== "https://") document.execCommand("createLink", false, url);
-    } else document.execCommand(b.dataset.cmd, false, null);
-    dirty = true;
-  });
-  // Paste as plain text so formatting from Word or websites does not come along.
-  $("#f-body").addEventListener("paste", function (ev) {
-    ev.preventDefault();
-    var text = (ev.clipboardData || window.clipboardData).getData("text/plain");
-    var html = text.split(/\r?\n\s*\r?\n|\r?\n/).filter(function (l) { return l.trim(); })
-      .map(function (l) { return "<p>" + esc(l.trim()) + "</p>"; }).join("");
-    document.execCommand("insertHTML", false, html);
-  });
-  $("#f-body").addEventListener("keydown", function () {
-    // Start with a paragraph instead of a bare text node.
-    if (!this.innerHTML.trim()) document.execCommand("formatBlock", false, "p");
-  });
+  // Browsers produce stray text, <div>s and styled <span>s in contenteditable.
+  // Turn the editor content into clean paragraphs before saving.
+  function normalizeBody(root) {
+    var out = document.createElement("div");
+    var para = null;
+    Array.prototype.slice.call(root.childNodes).forEach(function (n) {
+      var tag = n.nodeType === 1 ? n.tagName.toLowerCase() : null;
+      if (!tag || !/^(p|h2|h3|ul|ol|blockquote|div)$/.test(tag)) {
+        if (n.nodeType === 3 && !n.textContent.trim() && !para) return;
+        if (tag === "br" && !para) return;
+        if (!para) { para = document.createElement("p"); out.appendChild(para); }
+        para.appendChild(n.cloneNode(true));
+        return;
+      }
+      para = null;
+      if (tag === "div" || (tag === "p" && n.querySelector("ul, ol, h2, h3, blockquote, div, p"))) {
+        if (n.querySelector("p, h2, h3, ul, ol, blockquote, div")) out.insertAdjacentHTML("beforeend", normalizeBody(n));
+        else { var p = document.createElement("p"); p.innerHTML = n.innerHTML; out.appendChild(p); }
+        return;
+      }
+      out.appendChild(n.cloneNode(true));
+    });
+    $$("span, font", out).forEach(function (s) {
+      while (s.firstChild) s.parentNode.insertBefore(s.firstChild, s);
+      s.remove();
+    });
+    $$("[style]", out).forEach(function (e) { e.removeAttribute("style"); });
+    $$("p, h2, h3, li", out).forEach(function (e) { if (!e.textContent.trim()) e.remove(); });
+    return out.innerHTML;
+  }
 
   function collect(status) {
     return {
       title: $("#f-title").value, subtitle: $("#f-subtitle").value, category: $("#f-category").value,
       date: $("#f-date").value, slug: $("#f-slug").value.trim().toLowerCase(), answer: $("#f-answer").value,
-      body: $("#f-body").innerHTML, description: $("#f-description").value, keywords: $("#f-keywords").value,
-      faq: Array.prototype.map.call(document.querySelectorAll(".faq-item"), function (el) {
-        return { q: el.querySelector("[data-q]").value, a: el.querySelector("[data-a]").value };
-      }),
+      body: normalizeBody($("#f-body")), description: $("#f-description").value, keywords: $("#f-keywords").value,
+      faq: $$(".faq-item").map(function (el) { return { q: $("[data-q]", el).value, a: $("[data-a]", el).value }; }),
       status: status,
     };
   }
-  document.querySelectorAll("[data-save]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var data = collect(btn.dataset.save);
-      if (!data.title.trim()) return message($("#editMsg"), "العنوان إجباري.", "err");
-      if (!data.category) return message($("#editMsg"), "اختاروا المجال.", "err");
-      var buttons = document.querySelectorAll("[data-save]");
-      buttons.forEach(function (b) { b.disabled = true; });
-      var req = editing
-        ? api("/api/posts/" + encodeURIComponent(editing), { method: "PUT", body: data })
-        : api("/api/posts", { method: "POST", body: data });
-      req.then(function (res) {
-        dirty = false;
-        var url = location.origin + "/" + res.slug;
-        loadList(res.status === "published" ? "تم نشر المقال: " + url : "تم حفظ المسودة.");
-      }).catch(function (err) {
-        message($("#editMsg"), err.message, "err"); window.scrollTo(0, 0);
-      }).then(function () { buttons.forEach(function (b) { b.disabled = false; }); });
+
+  // Live counters, Google preview, checklist
+  function refresh() {
+    $$("[data-count-for]").forEach(function (c) {
+      var n = $("#" + c.dataset.countFor).value.length, max = +c.dataset.max;
+      c.textContent = n + " / " + max;
+      c.classList.toggle("over", n > max);
     });
+    var text = plain($("#f-body").innerHTML);
+    var words = text ? text.split(" ").length : 0;
+    $("#wordCount").textContent = words + " كلمة";
+    $("#readTime").textContent = words ? "≈ " + Math.max(1, Math.round(words / 180)) + " د قراءة" : "";
+    var title = $("#f-title").value.trim();
+    var desc = $("#f-description").value.trim() || $("#f-answer").value.trim() || text.slice(0, 160);
+    $("#serpTitle").textContent = (title || "عنوان المقال") + " | مكتب عباش وصديق للمحاماة";
+    $("#serpDesc").textContent = desc || "وصف المقال…";
+    $("#serpSlug").textContent = $("#f-slug").value.trim() || editing || "…";
+    var h2 = $$("#f-body h2").length;
+    var faqs = $$(".faq-item").filter(function (el) { return $("[data-q]", el).value.trim() && $("[data-a]", el).value.trim(); }).length;
+    var checks = [
+      [!!title, "عنوان على شكل سؤال"],
+      [!!$("#f-category").value, "اختيار المجال"],
+      [!!$("#f-answer").value.trim(), "«الجواب باختصار» مكتوب"],
+      [h2 >= 2, "قسمان على الأقل في النص (" + h2 + ")"],
+      [words >= 250, "250 كلمة على الأقل (" + words + ")"],
+      [faqs >= 2, "سؤالان شائعان على الأقل (" + faqs + ")"],
+    ];
+    $("#checklist").innerHTML = checks.map(function (c) { return '<li class="' + (c[0] ? "done" : "") + '">' + esc(c[1]) + "</li>"; }).join("");
+  }
+  function changed() {
+    // A field can fire "change" when it loses focus after the editor was closed; ignore that.
+    if ($("#editView").hidden) return;
+    setDirty(true);
+    refresh();
+    if (!editing) store(DRAFT_KEY, collect("draft"));
+  }
+  $("#postForm").addEventListener("input", changed);
+  $("#postForm").addEventListener("change", changed);
+  $("#f-slug").addEventListener("input", function () {
+    var v = this.value.toLowerCase().replace(/[\s_]+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-{2,}/g, "-");
+    if (v !== this.value) this.value = v;
+  });
+
+  // Toolbar
+  var bar = $(".toolbar");
+  bar.addEventListener("mousedown", function (ev) { if (ev.target.closest("button")) ev.preventDefault(); });
+  bar.addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    var ed = $("#f-body");
+    ed.focus();
+    if (b.dataset.block) {
+      var cur = (document.queryCommandValue("formatBlock") || "").toLowerCase();
+      document.execCommand("formatBlock", false, cur === b.dataset.block ? "p" : b.dataset.block);
+      changed();
+    } else if (b.dataset.cmd === "createLink") {
+      var sel = window.getSelection();
+      var range = sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+      dialog("إضافة رابط", "حددوا نصاً أولاً، ثم أدخلوا الرابط (يبدأ بـ https:// أو / لصفحة من الموقع).", { input: true, value: "https://", ok: "إضافة" })
+        .then(function (url) {
+          if (!url || url === "https://") return;
+          ed.focus();
+          if (range) { sel.removeAllRanges(); sel.addRange(range); }
+          document.execCommand("createLink", false, url.trim());
+          changed();
+        });
+    } else {
+      document.execCommand(b.dataset.cmd, false, null);
+      changed();
+    }
+    updateToolbar();
+  });
+  function updateToolbar() {
+    var block = (document.queryCommandValue("formatBlock") || "").toLowerCase();
+    $$("[data-block]", bar).forEach(function (b) { b.classList.toggle("on", block === b.dataset.block); });
+    $$("[data-cmd]", bar).forEach(function (b) {
+      if (/^(bold|insertUnorderedList|insertOrderedList)$/.test(b.dataset.cmd)) {
+        var on = false; try { on = document.queryCommandState(b.dataset.cmd); } catch (e) {}
+        b.classList.toggle("on", on);
+      }
+    });
+  }
+  document.addEventListener("selectionchange", function () {
+    if (document.activeElement === $("#f-body")) updateToolbar();
+  });
+  // Paste as clean paragraphs so formatting from Word or websites does not come along.
+  $("#f-body").addEventListener("paste", function (ev) {
+    ev.preventDefault();
+    var text = (ev.clipboardData || window.clipboardData).getData("text/plain");
+    var html = text.split(/\r?\n/).filter(function (l) { return l.trim(); })
+      .map(function (l) { return "<p>" + esc(l.trim()) + "</p>"; }).join("");
+    document.execCommand("insertHTML", false, html);
+  });
+  try { document.execCommand("defaultParagraphSeparator", false, "p"); } catch (e) {}
+  // Start typing inside a paragraph rather than a bare text node.
+  $("#f-body").addEventListener("focus", function () {
+    if (!this.textContent.trim() && !this.querySelector("li")) {
+      this.innerHTML = "<p><br></p>";
+      var r = document.createRange(); r.setStart(this.firstChild, 0); r.collapse(true);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+  });
+  $("#f-body").addEventListener("blur", function () {
+    if (!this.textContent.trim() && !this.querySelector("li")) this.innerHTML = "";  // show the placeholder again
+  });
+
+  // Save / delete
+  function save(status) {
+    var data = collect(status);
+    if (!data.title.trim()) { toast("العنوان إجباري.", "err"); $("#f-title").focus(); return; }
+    if (!data.category) { toast("اختاروا المجال.", "err"); $("#f-category").focus(); return; }
+    var buttons = $$("[data-save]");
+    buttons.forEach(function (b) { b.disabled = true; b.classList.toggle("loading", b.dataset.save === status); });
+    var req = editing
+      ? api("/api/posts/" + encodeURIComponent(editing), { method: "PUT", body: data })
+      : api("/api/posts", { method: "POST", body: data });
+    req.then(function (res) {
+      store(DRAFT_KEY, null);
+      var url = location.origin + "/" + res.slug;
+      toast(res.status === "published"
+        ? 'تم النشر. الرابط: <a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(url) + "</a>"
+        : "تم حفظ المسودة.");
+      editing = res.slug;
+      return api("/api/posts/" + encodeURIComponent(res.slug)).then(function (p) {
+        fill(p); setDirty(false);
+        history.replaceState(null, "", "#/edit/" + encodeURIComponent(res.slug));
+      });
+    }).catch(function (err) { toast(esc(err.message), "err"); })
+      .then(function () {
+        buttons.forEach(function (b) { b.disabled = false; b.classList.remove("loading"); });
+      });
+  }
+  $$("[data-save]").forEach(function (b) { b.addEventListener("click", function () { save(b.dataset.save); }); });
+  document.addEventListener("keydown", function (ev) {
+    if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "s" && !$("#editView").hidden) {
+      ev.preventDefault();
+      save(current.status === "published" ? "published" : "draft");
+    }
   });
   $("#deleteBtn").addEventListener("click", function () {
-    if (!editing || !confirm("حذف هذا المقال نهائياً؟ لا يمكن التراجع.")) return;
-    api("/api/posts/" + encodeURIComponent(editing), { method: "DELETE" })
-      .then(function () { dirty = false; loadList("تم حذف المقال."); })
-      .catch(function (err) { message($("#editMsg"), err.message, "err"); });
+    if (!editing) return;
+    dialog("حذف المقال؟", "سيُحذف المقال نهائياً من الموقع ولا يمكن التراجع.", { ok: "حذف نهائياً", danger: true }).then(function (ok) {
+      if (!ok) return;
+      api("/api/posts/" + encodeURIComponent(editing), { method: "DELETE" })
+        .then(function () { setDirty(false); toast("تم حذف المقال."); location.hash = "#/"; })
+        .catch(function (err) { toast(esc(err.message), "err"); });
+    });
   });
   window.addEventListener("beforeunload", function (ev) { if (dirty) { ev.preventDefault(); ev.returnValue = ""; } });
 })();
